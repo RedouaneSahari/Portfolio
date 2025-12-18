@@ -57,21 +57,9 @@ export function Contact() {
       href: "mailto:redouane.sahari@gmail.com",
     },
     {
-      icon: Phone,
-      label: "Téléphone",
-      value: "07 60 76 56 79",
-      href: "tel:0760765679",
-    },
-    {
       icon: MapPin,
       label: "Localisation",
       value: "Paris, France",
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      value: "Voir mon profil",
-      href: "https://www.linkedin.com/in/Redouane%20Sahari",
     },
   ]
 

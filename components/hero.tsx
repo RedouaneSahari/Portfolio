@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Download, Mail, Shield } from "lucide-react"
+import { Mail, Shield } from "lucide-react"
 
 export function Hero() {
   const scrollToContact = () => {
@@ -11,11 +11,7 @@ export function Hero() {
     }
   }
 
-  const handleDownloadCV = () => {
-    alert(
-      "Fonctionnalité de téléchargement du CV à implémenter.\nAjoutez votre CV en PDF dans le dossier public et créez un lien de téléchargement.",
-    )
-  }
+
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">

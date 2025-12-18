@@ -27,3 +27,6 @@ echo.
 
 REM Garder la fenêtre ouverte
 pause
+
+
+"""Le lien du portfolio peut être ouvert à partir de cette addresse : https://redouanesahari.github.io/Portfolio/"""

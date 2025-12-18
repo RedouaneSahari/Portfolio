@@ -12,7 +12,7 @@ import { MalwareAnalysis } from "@/components/projects/malware-analysis"
 import { notFound } from "next/navigation"
 import type { JSX } from "react"
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
   const projectTitles: Record<string, string> = {
     "audit-web-security": "Audit de Sécurité Web",
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 }
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
 
   const projectComponents: Record<string, JSX.Element> = {
@@ -58,7 +58,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
   )
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return [
     { id: "audit-web-security" },
     { id: "vpn-cisco-infrastructure" },

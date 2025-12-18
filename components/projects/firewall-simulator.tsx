@@ -146,7 +146,7 @@ export function FirewallSimulator() {
                 onChange={(e) => setNewRule({ ...newRule, port: e.target.value })}
                 className="bg-gray-950 border-cyan-500/50 text-white"
               />
-              <Select value={newRule.protocol} onValueChange={(value) => setNewRule({ ...newRule, protocol: value })}>
+              <Select value={newRule.protocol} onValueChange={(value: string) => setNewRule({ ...newRule, protocol: value })}>
                 <SelectTrigger className="bg-gray-950 border-cyan-500/50 text-white">
                   <SelectValue />
                 </SelectTrigger>
@@ -206,7 +206,7 @@ export function FirewallSimulator() {
               />
               <Select
                 value={testPacket.protocol}
-                onValueChange={(value) => setTestPacket({ ...testPacket, protocol: value })}
+                onValueChange={(value: string) => setTestPacket({ ...testPacket, protocol: value })}
               >
                 <SelectTrigger className="bg-gray-950 border-cyan-500/50 text-white">
                   <SelectValue />

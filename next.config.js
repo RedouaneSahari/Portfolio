@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
   output: 'export',
   reactStrictMode: true,
@@ -6,8 +8,11 @@ const nextConfig = {
     unoptimized: true,
     domains: [],
   },
-  basePath: '/Portfolio',
-  assetPrefix: '/Portfolio/',
+  // Utiliser basePath uniquement en production (pour GitHub Pages)
+  basePath: isProd ? '/Portfolio' : '',
+  assetPrefix: isProd ? '/Portfolio/' : '',
+  // Désactiver les routes API pour l'export statique
+  trailingSlash: true,
 }
 
 module.exports = nextConfig

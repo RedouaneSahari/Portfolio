@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Mail, MapPin, Phone, Linkedin, Send } from "lucide-react"
+import { Mail, MapPin, Phone, Linkedin, Loader2, Send } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 export function Contact() {
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   const [formData, setFormData] = useState({
@@ -35,11 +38,39 @@ export function Contact() {
     return () => observer.disconnect()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = `Message de ${formData.name}`
-    const body = `Nom: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`
-    window.location.href = `mailto:redouane.sahari@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`
+    setLoading(true)
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        toast({
+          title: "Message envoyé !",
+          description: "Je vous répondrai dans les plus brefs délais.",
+        })
+        setFormData({ name: "", email: "", message: "" })
+      } else {
+        throw new Error(data.error || "Une erreur est survenue")
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: error instanceof Error ? error.message : "Une erreur est survenue",
+        variant: "destructive",
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -165,11 +196,21 @@ export function Contact() {
 
                 <Button
                   type="submit"
+                  disabled={loading}
                   className="w-full bg-transparent border-2 border-cyan-400 text-white hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)] transition-all duration-300 relative overflow-hidden group"
                 >
                   <span className="absolute inset-0 bg-cyan-400 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 -z-10" />
-                  <Send className="mr-2 h-5 w-5" />
-                  Envoyer
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-5 w-5" />
+                      Envoyer
+                    </>
+                  )}
                 </Button>
               </form>
             </Card>
